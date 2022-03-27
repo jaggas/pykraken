@@ -1,0 +1,9 @@
+[submodule "krakenex"]
+	path = third_party/krakenex
+	url = https://github.com/veox/python3-krakenex
+[submodule "kraken_wsclient"]
+	path = third_party/kraken_wsclient
+	url = https://github.com/krakenfx/kraken-wsclient-py
+[submodule "krakenapi"]
+	path = third_party/krakenapi
+	url = https://github.com/dominiktraxl/pykrakenapi
