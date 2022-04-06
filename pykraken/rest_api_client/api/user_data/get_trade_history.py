@@ -3,15 +3,13 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_trades_history_request_body import GetTradesHistoryRequestBody
-from ...models.inline_response_20015 import InlineResponse20015
+from ...models.get_trade_history_response_200 import GetTradeHistoryResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: GetTradesHistoryRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/TradesHistory".format(client.base_url)
 
@@ -24,19 +22,18 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20015]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetTradeHistoryResponse200]:
     if response.status_code == 200:
-        response_200 = InlineResponse20015.from_dict(response.json())
+        response_200 = GetTradeHistoryResponse200.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[InlineResponse20015]:
+def _build_response(*, response: httpx.Response) -> Response[GetTradeHistoryResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -48,8 +45,7 @@ def _build_response(*, response: httpx.Response) -> Response[InlineResponse20015
 def sync_detailed(
     *,
     client: Client,
-    form_data: GetTradesHistoryRequestBody,
-) -> Response[InlineResponse20015]:
+) -> Response[GetTradeHistoryResponse200]:
     """Get Trades History
 
      Retrieve information about trades/fills. 50 results are returned at a time, the most recent by
@@ -58,12 +54,11 @@ def sync_detailed(
     asset pair (`pair_decimals` and `lot_decimals`), not the individual assets' precision (`decimals`).
 
     Returns:
-        Response[InlineResponse20015]
+        Response[GetTradeHistoryResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -77,8 +72,7 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    form_data: GetTradesHistoryRequestBody,
-) -> Optional[InlineResponse20015]:
+) -> Optional[GetTradeHistoryResponse200]:
     """Get Trades History
 
      Retrieve information about trades/fills. 50 results are returned at a time, the most recent by
@@ -87,20 +81,18 @@ def sync(
     asset pair (`pair_decimals` and `lot_decimals`), not the individual assets' precision (`decimals`).
 
     Returns:
-        Response[InlineResponse20015]
+        Response[GetTradeHistoryResponse200]
     """
 
     return sync_detailed(
         client=client,
-        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    form_data: GetTradesHistoryRequestBody,
-) -> Response[InlineResponse20015]:
+) -> Response[GetTradeHistoryResponse200]:
     """Get Trades History
 
      Retrieve information about trades/fills. 50 results are returned at a time, the most recent by
@@ -109,12 +101,11 @@ async def asyncio_detailed(
     asset pair (`pair_decimals` and `lot_decimals`), not the individual assets' precision (`decimals`).
 
     Returns:
-        Response[InlineResponse20015]
+        Response[GetTradeHistoryResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -126,8 +117,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    form_data: GetTradesHistoryRequestBody,
-) -> Optional[InlineResponse20015]:
+) -> Optional[GetTradeHistoryResponse200]:
     """Get Trades History
 
      Retrieve information about trades/fills. 50 results are returned at a time, the most recent by
@@ -136,12 +126,11 @@ async def asyncio(
     asset pair (`pair_decimals` and `lot_decimals`), not the individual assets' precision (`decimals`).
 
     Returns:
-        Response[InlineResponse20015]
+        Response[GetTradeHistoryResponse200]
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            form_data=form_data,
         )
     ).parsed

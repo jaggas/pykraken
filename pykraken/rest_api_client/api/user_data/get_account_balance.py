@@ -3,15 +3,13 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.inline_response_20010 import InlineResponse20010
-from ...models.private_balance_body import PrivateBalanceBody
+from ...models.get_account_balance_response_200 import GetAccountBalanceResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: PrivateBalanceBody,
 ) -> Dict[str, Any]:
     url = "{}/private/Balance".format(client.base_url)
 
@@ -24,19 +22,18 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20010]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetAccountBalanceResponse200]:
     if response.status_code == 200:
-        response_200 = InlineResponse20010.from_dict(response.json())
+        response_200 = GetAccountBalanceResponse200.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[InlineResponse20010]:
+def _build_response(*, response: httpx.Response) -> Response[GetAccountBalanceResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -48,19 +45,17 @@ def _build_response(*, response: httpx.Response) -> Response[InlineResponse20010
 def sync_detailed(
     *,
     client: Client,
-    form_data: PrivateBalanceBody,
-) -> Response[InlineResponse20010]:
+) -> Response[GetAccountBalanceResponse200]:
     """Get Account Balance
 
      Retrieve all cash balances, net of pending withdrawals.
 
     Returns:
-        Response[InlineResponse20010]
+        Response[GetAccountBalanceResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -74,38 +69,34 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-    form_data: PrivateBalanceBody,
-) -> Optional[InlineResponse20010]:
+) -> Optional[GetAccountBalanceResponse200]:
     """Get Account Balance
 
      Retrieve all cash balances, net of pending withdrawals.
 
     Returns:
-        Response[InlineResponse20010]
+        Response[GetAccountBalanceResponse200]
     """
 
     return sync_detailed(
         client=client,
-        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-    form_data: PrivateBalanceBody,
-) -> Response[InlineResponse20010]:
+) -> Response[GetAccountBalanceResponse200]:
     """Get Account Balance
 
      Retrieve all cash balances, net of pending withdrawals.
 
     Returns:
-        Response[InlineResponse20010]
+        Response[GetAccountBalanceResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -117,19 +108,17 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-    form_data: PrivateBalanceBody,
-) -> Optional[InlineResponse20010]:
+) -> Optional[GetAccountBalanceResponse200]:
     """Get Account Balance
 
      Retrieve all cash balances, net of pending withdrawals.
 
     Returns:
-        Response[InlineResponse20010]
+        Response[GetAccountBalanceResponse200]
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            form_data=form_data,
         )
     ).parsed

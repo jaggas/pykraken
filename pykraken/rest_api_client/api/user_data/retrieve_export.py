@@ -3,14 +3,12 @@ from typing import Any, Dict
 import httpx
 
 from ...client import Client
-from ...models.private_retrieve_export_body import PrivateRetrieveExportBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: PrivateRetrieveExportBody,
 ) -> Dict[str, Any]:
     url = "{}/private/RetrieveExport".format(client.base_url)
 
@@ -23,7 +21,6 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
@@ -39,7 +36,6 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 def sync_detailed(
     *,
     client: Client,
-    form_data: PrivateRetrieveExportBody,
 ) -> Response[Any]:
     """Retrieve Data Export
 
@@ -51,7 +47,6 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -65,7 +60,6 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: Client,
-    form_data: PrivateRetrieveExportBody,
 ) -> Response[Any]:
     """Retrieve Data Export
 
@@ -77,7 +71,6 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

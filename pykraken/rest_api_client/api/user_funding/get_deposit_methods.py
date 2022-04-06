@@ -1,16 +1,15 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
-from ...models.get_desposit_methods_request_body import GetDespositMethodsRequestBody
+from ...models.get_deposit_methods_response_200 import GetDepositMethodsResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: GetDespositMethodsRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/DepositMethods".format(client.base_url)
 
@@ -23,35 +22,40 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
-def _build_response(*, response: httpx.Response) -> Response[Any]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetDepositMethodsResponse200]:
+    if response.status_code == 200:
+        response_200 = GetDepositMethodsResponse200.from_dict(response.json())
+
+        return response_200
+    return None
+
+
+def _build_response(*, response: httpx.Response) -> Response[GetDepositMethodsResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=None,
+        parsed=_parse_response(response=response),
     )
 
 
 def sync_detailed(
     *,
     client: Client,
-    form_data: GetDespositMethodsRequestBody,
-) -> Response[Any]:
+) -> Response[GetDepositMethodsResponse200]:
     """Get Deposit Methods
 
      Retrieve methods available for depositing a particular asset.
 
     Returns:
-        Response[Any]
+        Response[GetDepositMethodsResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -62,25 +66,59 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-async def asyncio_detailed(
+def sync(
     *,
     client: Client,
-    form_data: GetDespositMethodsRequestBody,
-) -> Response[Any]:
+) -> Optional[GetDepositMethodsResponse200]:
     """Get Deposit Methods
 
      Retrieve methods available for depositing a particular asset.
 
     Returns:
-        Response[Any]
+        Response[GetDepositMethodsResponse200]
+    """
+
+    return sync_detailed(
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Client,
+) -> Response[GetDepositMethodsResponse200]:
+    """Get Deposit Methods
+
+     Retrieve methods available for depositing a particular asset.
+
+    Returns:
+        Response[GetDepositMethodsResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
+
+
+async def asyncio(
+    *,
+    client: Client,
+) -> Optional[GetDepositMethodsResponse200]:
+    """Get Deposit Methods
+
+     Retrieve methods available for depositing a particular asset.
+
+    Returns:
+        Response[GetDepositMethodsResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+        )
+    ).parsed

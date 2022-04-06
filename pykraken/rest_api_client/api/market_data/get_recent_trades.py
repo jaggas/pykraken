@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 import httpx
 
 from ...client import Client
-from ...models.inline_response_2007 import InlineResponse2007
+from ...models.get_recent_trades_response_200 import GetRecentTradesResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -35,15 +35,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse2007]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetRecentTradesResponse200]:
     if response.status_code == 200:
-        response_200 = InlineResponse2007.from_dict(response.json())
+        response_200 = GetRecentTradesResponse200.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[InlineResponse2007]:
+def _build_response(*, response: httpx.Response) -> Response[GetRecentTradesResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -57,7 +57,7 @@ def sync_detailed(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     since: Union[Unset, None, str] = UNSET,
-) -> Response[InlineResponse2007]:
+) -> Response[GetRecentTradesResponse200]:
     """Get Recent Trades
 
      Returns the last 1000 trades by default
@@ -67,7 +67,7 @@ def sync_detailed(
         since (Union[Unset, None, str]):
 
     Returns:
-        Response[InlineResponse2007]
+        Response[GetRecentTradesResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -89,7 +89,7 @@ def sync(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     since: Union[Unset, None, str] = UNSET,
-) -> Optional[InlineResponse2007]:
+) -> Optional[GetRecentTradesResponse200]:
     """Get Recent Trades
 
      Returns the last 1000 trades by default
@@ -99,7 +99,7 @@ def sync(
         since (Union[Unset, None, str]):
 
     Returns:
-        Response[InlineResponse2007]
+        Response[GetRecentTradesResponse200]
     """
 
     return sync_detailed(
@@ -114,7 +114,7 @@ async def asyncio_detailed(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     since: Union[Unset, None, str] = UNSET,
-) -> Response[InlineResponse2007]:
+) -> Response[GetRecentTradesResponse200]:
     """Get Recent Trades
 
      Returns the last 1000 trades by default
@@ -124,7 +124,7 @@ async def asyncio_detailed(
         since (Union[Unset, None, str]):
 
     Returns:
-        Response[InlineResponse2007]
+        Response[GetRecentTradesResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -144,7 +144,7 @@ async def asyncio(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     since: Union[Unset, None, str] = UNSET,
-) -> Optional[InlineResponse2007]:
+) -> Optional[GetRecentTradesResponse200]:
     """Get Recent Trades
 
      Returns the last 1000 trades by default
@@ -154,7 +154,7 @@ async def asyncio(
         since (Union[Unset, None, str]):
 
     Returns:
-        Response[InlineResponse2007]
+        Response[GetRecentTradesResponse200]
     """
 
     return (

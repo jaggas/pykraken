@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Type, TypeVar
 
 import attr
 
-from ..models.fee_tier_info import FeeTierInfo
+from ..models.trade_volume_fees_maker_additional_property import TradeVolumeFeesMakerAdditionalProperty
 
 T = TypeVar("T", bound="TradeVolumeFeesMaker")
 
@@ -11,7 +11,7 @@ T = TypeVar("T", bound="TradeVolumeFeesMaker")
 class TradeVolumeFeesMaker:
     """ """
 
-    additional_properties: Dict[str, FeeTierInfo] = attr.ib(init=False, factory=dict)
+    additional_properties: Dict[str, TradeVolumeFeesMakerAdditionalProperty] = attr.ib(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
 
@@ -30,7 +30,7 @@ class TradeVolumeFeesMaker:
 
         additional_properties = {}
         for prop_name, prop_dict in d.items():
-            additional_property = FeeTierInfo.from_dict(prop_dict)
+            additional_property = TradeVolumeFeesMakerAdditionalProperty.from_dict(prop_dict)
 
             additional_properties[prop_name] = additional_property
 
@@ -41,10 +41,10 @@ class TradeVolumeFeesMaker:
     def additional_keys(self) -> List[str]:
         return list(self.additional_properties.keys())
 
-    def __getitem__(self, key: str) -> FeeTierInfo:
+    def __getitem__(self, key: str) -> TradeVolumeFeesMakerAdditionalProperty:
         return self.additional_properties[key]
 
-    def __setitem__(self, key: str, value: FeeTierInfo) -> None:
+    def __setitem__(self, key: str, value: TradeVolumeFeesMakerAdditionalProperty) -> None:
         self.additional_properties[key] = value
 
     def __delitem__(self, key: str) -> None:

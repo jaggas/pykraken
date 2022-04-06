@@ -1,16 +1,15 @@
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
 
 from ...client import Client
-from ...models.get_trade_volume import GetTradeVolume
+from ...models.get_trade_volume_response_200 import GetTradeVolumeResponse200
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: GetTradeVolume,
     pair: Union[Unset, None, str] = UNSET,
 ) -> Dict[str, Any]:
     url = "{}/private/TradeVolume".format(client.base_url)
@@ -29,26 +28,32 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
         "params": params,
     }
 
 
-def _build_response(*, response: httpx.Response) -> Response[Any]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetTradeVolumeResponse200]:
+    if response.status_code == 200:
+        response_200 = GetTradeVolumeResponse200.from_dict(response.json())
+
+        return response_200
+    return None
+
+
+def _build_response(*, response: httpx.Response) -> Response[GetTradeVolumeResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=None,
+        parsed=_parse_response(response=response),
     )
 
 
 def sync_detailed(
     *,
     client: Client,
-    form_data: GetTradeVolume,
     pair: Union[Unset, None, str] = UNSET,
-) -> Response[Any]:
+) -> Response[GetTradeVolumeResponse200]:
     """Get Trade Volume
 
      Note: If an asset pair is on a maker/taker fee schedule, the taker side is given in `fees` and maker
@@ -58,12 +63,11 @@ def sync_detailed(
         pair (Union[Unset, None, str]):
 
     Returns:
-        Response[Any]
+        Response[GetTradeVolumeResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
         pair=pair,
     )
 
@@ -75,12 +79,11 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-async def asyncio_detailed(
+def sync(
     *,
     client: Client,
-    form_data: GetTradeVolume,
     pair: Union[Unset, None, str] = UNSET,
-) -> Response[Any]:
+) -> Optional[GetTradeVolumeResponse200]:
     """Get Trade Volume
 
      Note: If an asset pair is on a maker/taker fee schedule, the taker side is given in `fees` and maker
@@ -90,12 +93,34 @@ async def asyncio_detailed(
         pair (Union[Unset, None, str]):
 
     Returns:
-        Response[Any]
+        Response[GetTradeVolumeResponse200]
+    """
+
+    return sync_detailed(
+        client=client,
+        pair=pair,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Client,
+    pair: Union[Unset, None, str] = UNSET,
+) -> Response[GetTradeVolumeResponse200]:
+    """Get Trade Volume
+
+     Note: If an asset pair is on a maker/taker fee schedule, the taker side is given in `fees` and maker
+    side in `fees_maker`. For pairs not on maker/taker, they will only be given in `fees`.
+
+    Args:
+        pair (Union[Unset, None, str]):
+
+    Returns:
+        Response[GetTradeVolumeResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
         pair=pair,
     )
 
@@ -103,3 +128,28 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
+
+
+async def asyncio(
+    *,
+    client: Client,
+    pair: Union[Unset, None, str] = UNSET,
+) -> Optional[GetTradeVolumeResponse200]:
+    """Get Trade Volume
+
+     Note: If an asset pair is on a maker/taker fee schedule, the taker side is given in `fees` and maker
+    side in `fees_maker`. For pairs not on maker/taker, they will only be given in `fees`.
+
+    Args:
+        pair (Union[Unset, None, str]):
+
+    Returns:
+        Response[GetTradeVolumeResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+            pair=pair,
+        )
+    ).parsed

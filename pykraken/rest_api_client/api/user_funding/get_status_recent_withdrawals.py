@@ -1,16 +1,15 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
-from ...models.get_status_of_recent_withdrawals_request_body import GetStatusOfRecentWithdrawalsRequestBody
+from ...models.get_status_recent_withdrawals_response_200 import GetStatusRecentWithdrawalsResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: GetStatusOfRecentWithdrawalsRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/WithdrawStatus".format(client.base_url)
 
@@ -23,35 +22,40 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
-def _build_response(*, response: httpx.Response) -> Response[Any]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetStatusRecentWithdrawalsResponse200]:
+    if response.status_code == 200:
+        response_200 = GetStatusRecentWithdrawalsResponse200.from_dict(response.json())
+
+        return response_200
+    return None
+
+
+def _build_response(*, response: httpx.Response) -> Response[GetStatusRecentWithdrawalsResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=None,
+        parsed=_parse_response(response=response),
     )
 
 
 def sync_detailed(
     *,
     client: Client,
-    form_data: GetStatusOfRecentWithdrawalsRequestBody,
-) -> Response[Any]:
+) -> Response[GetStatusRecentWithdrawalsResponse200]:
     """Get Status of Recent Withdrawals
 
      Retrieve information about recently requests withdrawals.
 
     Returns:
-        Response[Any]
+        Response[GetStatusRecentWithdrawalsResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -62,25 +66,59 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-async def asyncio_detailed(
+def sync(
     *,
     client: Client,
-    form_data: GetStatusOfRecentWithdrawalsRequestBody,
-) -> Response[Any]:
+) -> Optional[GetStatusRecentWithdrawalsResponse200]:
     """Get Status of Recent Withdrawals
 
      Retrieve information about recently requests withdrawals.
 
     Returns:
-        Response[Any]
+        Response[GetStatusRecentWithdrawalsResponse200]
+    """
+
+    return sync_detailed(
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Client,
+) -> Response[GetStatusRecentWithdrawalsResponse200]:
+    """Get Status of Recent Withdrawals
+
+     Retrieve information about recently requests withdrawals.
+
+    Returns:
+        Response[GetStatusRecentWithdrawalsResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
+
+
+async def asyncio(
+    *,
+    client: Client,
+) -> Optional[GetStatusRecentWithdrawalsResponse200]:
+    """Get Status of Recent Withdrawals
+
+     Retrieve information about recently requests withdrawals.
+
+    Returns:
+        Response[GetStatusRecentWithdrawalsResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+        )
+    ).parsed

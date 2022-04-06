@@ -2,9 +2,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.order_side import OrderSide
-from ..models.order_type import OrderType
-from ..models.position_status import PositionStatus
+from ..models.trade_ordertype import TradeOrdertype
+from ..models.trade_posstatus import TradePosstatus
+from ..models.trade_type import TradeType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Trade")
@@ -18,10 +18,10 @@ class Trade:
         ordertxid (Union[Unset, str]): Order responsible for execution of trade
         pair (Union[Unset, str]): Asset pair
         time (Union[Unset, float]): Unix timestamp of trade
-        type (Union[Unset, OrderSide]): Order side
+        type (Union[Unset, TradeType]): Order side
               * buy - buy side
               * sell - sell side
-        ordertype (Union[Unset, OrderType]):
+        ordertype (Union[Unset, TradeOrdertype]):
         price (Union[Unset, str]): Average price order was executed at (quote currency)
         cost (Union[Unset, str]): Total cost of order (quote currency)
         fee (Union[Unset, str]): Total fee (quote currency)
@@ -29,7 +29,8 @@ class Trade:
         margin (Union[Unset, str]): Initial margin (quote currency)
         misc (Union[Unset, str]): Comma delimited list of miscellaneous info:
             * `closing` &mdash; Trade closes all or part of a position
-        posstatus (Union[Unset, PositionStatus]): Position status
+        posstatus (Union[Unset, TradePosstatus]): Position status (open/closed) <br><sub><sup>Only present if trade
+            opened a position</sub></sup>
         cprice (Union[Unset, Any]): Average price of closed portion of position (quote currency)
             <br><sub><sup>Only present if trade opened a position</sub></sup>
         ccost (Union[Unset, Any]): Total cost of closed portion of position (quote currency)
@@ -49,15 +50,15 @@ class Trade:
     ordertxid: Union[Unset, str] = UNSET
     pair: Union[Unset, str] = UNSET
     time: Union[Unset, float] = UNSET
-    type: Union[Unset, OrderSide] = UNSET
-    ordertype: Union[Unset, OrderType] = UNSET
+    type: Union[Unset, TradeType] = UNSET
+    ordertype: Union[Unset, TradeOrdertype] = UNSET
     price: Union[Unset, str] = UNSET
     cost: Union[Unset, str] = UNSET
     fee: Union[Unset, str] = UNSET
     vol: Union[Unset, str] = UNSET
     margin: Union[Unset, str] = UNSET
     misc: Union[Unset, str] = UNSET
-    posstatus: Union[Unset, PositionStatus] = UNSET
+    posstatus: Union[Unset, TradePosstatus] = UNSET
     cprice: Union[Unset, Any] = UNSET
     ccost: Union[Unset, Any] = UNSET
     cfee: Union[Unset, Any] = UNSET
@@ -153,18 +154,18 @@ class Trade:
         time = d.pop("time", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, OrderSide]
+        type: Union[Unset, TradeType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = OrderSide(_type)
+            type = TradeType(_type)
 
         _ordertype = d.pop("ordertype", UNSET)
-        ordertype: Union[Unset, OrderType]
+        ordertype: Union[Unset, TradeOrdertype]
         if isinstance(_ordertype, Unset):
             ordertype = UNSET
         else:
-            ordertype = OrderType(_ordertype)
+            ordertype = TradeOrdertype(_ordertype)
 
         price = d.pop("price", UNSET)
 
@@ -179,11 +180,11 @@ class Trade:
         misc = d.pop("misc", UNSET)
 
         _posstatus = d.pop("posstatus", UNSET)
-        posstatus: Union[Unset, PositionStatus]
+        posstatus: Union[Unset, TradePosstatus]
         if isinstance(_posstatus, Unset):
             posstatus = UNSET
         else:
-            posstatus = PositionStatus(_posstatus)
+            posstatus = TradePosstatus(_posstatus)
 
         cprice = d.pop("cprice", UNSET)
 

@@ -10,7 +10,8 @@ T = TypeVar("T", bound="OrderAdded")
 
 @attr.s(auto_attribs=True)
 class OrderAdded:
-    """
+    """New order response
+
     Attributes:
         descr (Union[Unset, OrderAddedDescr]): Order description info
         txid (Union[Unset, List[str]]): Transaction IDs for order

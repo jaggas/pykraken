@@ -2,9 +2,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.order_side import OrderSide
-from ..models.order_type import OrderType
-from ..models.position_status import PositionStatus
+from ..models.position_ordertype import PositionOrdertype
+from ..models.position_posstatus import PositionPosstatus
+from ..models.position_type import PositionType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="Position")
@@ -16,13 +16,13 @@ class Position:
 
     Attributes:
         ordertxid (Union[Unset, str]): Order ID responsible for the position
-        posstatus (Union[Unset, PositionStatus]): Position status
+        posstatus (Union[Unset, PositionPosstatus]): Position status
         pair (Union[Unset, str]): Asset pair
         time (Union[Unset, float]): Unix timestamp of trade
-        type (Union[Unset, OrderSide]): Order side
+        type (Union[Unset, PositionType]): Order side
               * buy - buy side
               * sell - sell side
-        ordertype (Union[Unset, OrderType]):
+        ordertype (Union[Unset, PositionOrdertype]):
         cost (Union[Unset, str]): Opening cost of position (in quote currency)
         fee (Union[Unset, str]): Opening fee of position (in quote currency)
         vol (Union[Unset, str]): Position opening size (in base currency)
@@ -37,11 +37,11 @@ class Position:
     """
 
     ordertxid: Union[Unset, str] = UNSET
-    posstatus: Union[Unset, PositionStatus] = UNSET
+    posstatus: Union[Unset, PositionPosstatus] = UNSET
     pair: Union[Unset, str] = UNSET
     time: Union[Unset, float] = UNSET
-    type: Union[Unset, OrderSide] = UNSET
-    ordertype: Union[Unset, OrderType] = UNSET
+    type: Union[Unset, PositionType] = UNSET
+    ordertype: Union[Unset, PositionOrdertype] = UNSET
     cost: Union[Unset, str] = UNSET
     fee: Union[Unset, str] = UNSET
     vol: Union[Unset, str] = UNSET
@@ -129,29 +129,29 @@ class Position:
         ordertxid = d.pop("ordertxid", UNSET)
 
         _posstatus = d.pop("posstatus", UNSET)
-        posstatus: Union[Unset, PositionStatus]
+        posstatus: Union[Unset, PositionPosstatus]
         if isinstance(_posstatus, Unset):
             posstatus = UNSET
         else:
-            posstatus = PositionStatus(_posstatus)
+            posstatus = PositionPosstatus(_posstatus)
 
         pair = d.pop("pair", UNSET)
 
         time = d.pop("time", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, OrderSide]
+        type: Union[Unset, PositionType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = OrderSide(_type)
+            type = PositionType(_type)
 
         _ordertype = d.pop("ordertype", UNSET)
-        ordertype: Union[Unset, OrderType]
+        ordertype: Union[Unset, PositionOrdertype]
         if isinstance(_ordertype, Unset):
             ordertype = UNSET
         else:
-            ordertype = OrderType(_ordertype)
+            ordertype = PositionOrdertype(_ordertype)
 
         cost = d.pop("cost", UNSET)
 

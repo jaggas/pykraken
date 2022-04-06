@@ -2,8 +2,8 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 
 import attr
 
-from ..models.order_side import OrderSide
-from ..models.order_type import OrderType
+from ..models.order_description_ordertype import OrderDescriptionOrdertype
+from ..models.order_description_type import OrderDescriptionType
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="OrderDescription")
@@ -15,10 +15,10 @@ class OrderDescription:
 
     Attributes:
         pair (Union[Unset, str]): Asset pair
-        type (Union[Unset, OrderSide]): Order side
+        type (Union[Unset, OrderDescriptionType]): Order side
               * buy - buy side
               * sell - sell side
-        ordertype (Union[Unset, OrderType]):
+        ordertype (Union[Unset, OrderDescriptionOrdertype]):
         price (Union[Unset, str]): primary price
         price2 (Union[Unset, str]): Secondary price
         leverage (Union[Unset, str]): Amount of leverage
@@ -27,8 +27,8 @@ class OrderDescription:
     """
 
     pair: Union[Unset, str] = UNSET
-    type: Union[Unset, OrderSide] = UNSET
-    ordertype: Union[Unset, OrderType] = UNSET
+    type: Union[Unset, OrderDescriptionType] = UNSET
+    ordertype: Union[Unset, OrderDescriptionOrdertype] = UNSET
     price: Union[Unset, str] = UNSET
     price2: Union[Unset, str] = UNSET
     leverage: Union[Unset, str] = UNSET
@@ -80,18 +80,18 @@ class OrderDescription:
         pair = d.pop("pair", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, OrderSide]
+        type: Union[Unset, OrderDescriptionType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = OrderSide(_type)
+            type = OrderDescriptionType(_type)
 
         _ordertype = d.pop("ordertype", UNSET)
-        ordertype: Union[Unset, OrderType]
+        ordertype: Union[Unset, OrderDescriptionOrdertype]
         if isinstance(_ordertype, Unset):
             ordertype = UNSET
         else:
-            ordertype = OrderType(_ordertype)
+            ordertype = OrderDescriptionOrdertype(_ordertype)
 
         price = d.pop("price", UNSET)
 

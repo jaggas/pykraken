@@ -4,7 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.get_ohlc_data_interval import GetOHLCDataInterval
-from ...models.inline_response_2005 import InlineResponse2005
+from ...models.get_ohlc_data_response_200 import GetOHLCDataResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -43,15 +43,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse2005]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetOHLCDataResponse200]:
     if response.status_code == 200:
-        response_200 = InlineResponse2005.from_dict(response.json())
+        response_200 = GetOHLCDataResponse200.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[InlineResponse2005]:
+def _build_response(*, response: httpx.Response) -> Response[GetOHLCDataResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -66,7 +66,7 @@ def sync_detailed(
     pair: Union[Unset, None, str] = UNSET,
     interval: Union[Unset, None, GetOHLCDataInterval] = GetOHLCDataInterval.VALUE_1,
     since: Union[Unset, None, int] = UNSET,
-) -> Response[InlineResponse2005]:
+) -> Response[GetOHLCDataResponse200]:
     """Get OHLC Data
 
      Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always
@@ -78,7 +78,7 @@ def sync_detailed(
         since (Union[Unset, None, int]):
 
     Returns:
-        Response[InlineResponse2005]
+        Response[GetOHLCDataResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -102,7 +102,7 @@ def sync(
     pair: Union[Unset, None, str] = UNSET,
     interval: Union[Unset, None, GetOHLCDataInterval] = GetOHLCDataInterval.VALUE_1,
     since: Union[Unset, None, int] = UNSET,
-) -> Optional[InlineResponse2005]:
+) -> Optional[GetOHLCDataResponse200]:
     """Get OHLC Data
 
      Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always
@@ -114,7 +114,7 @@ def sync(
         since (Union[Unset, None, int]):
 
     Returns:
-        Response[InlineResponse2005]
+        Response[GetOHLCDataResponse200]
     """
 
     return sync_detailed(
@@ -131,7 +131,7 @@ async def asyncio_detailed(
     pair: Union[Unset, None, str] = UNSET,
     interval: Union[Unset, None, GetOHLCDataInterval] = GetOHLCDataInterval.VALUE_1,
     since: Union[Unset, None, int] = UNSET,
-) -> Response[InlineResponse2005]:
+) -> Response[GetOHLCDataResponse200]:
     """Get OHLC Data
 
      Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always
@@ -143,7 +143,7 @@ async def asyncio_detailed(
         since (Union[Unset, None, int]):
 
     Returns:
-        Response[InlineResponse2005]
+        Response[GetOHLCDataResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -165,7 +165,7 @@ async def asyncio(
     pair: Union[Unset, None, str] = UNSET,
     interval: Union[Unset, None, GetOHLCDataInterval] = GetOHLCDataInterval.VALUE_1,
     since: Union[Unset, None, int] = UNSET,
-) -> Optional[InlineResponse2005]:
+) -> Optional[GetOHLCDataResponse200]:
     """Get OHLC Data
 
      Note: the last entry in the OHLC array is for the current, not-yet-committed frame and will always
@@ -177,7 +177,7 @@ async def asyncio(
         since (Union[Unset, None, int]):
 
     Returns:
-        Response[InlineResponse2005]
+        Response[GetOHLCDataResponse200]
     """
 
     return (

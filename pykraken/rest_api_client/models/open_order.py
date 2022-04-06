@@ -2,9 +2,9 @@ from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 import attr
 
-from ..models.order_description import OrderDescription
-from ..models.order_status import OrderStatus
-from ..models.order_trigger import OrderTrigger
+from ..models.open_order_descr import OpenOrderDescr
+from ..models.open_order_status import OpenOrderStatus
+from ..models.open_order_trigger import OpenOrderTrigger
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="OpenOrder")
@@ -17,7 +17,7 @@ class OpenOrder:
     Attributes:
         refid (Union[Unset, str]): Referral order transaction ID that created this order
         userref (Union[Unset, str]): User reference id
-        status (Union[Unset, OrderStatus]): Status of order
+        status (Union[Unset, OpenOrderStatus]): Status of order
               * pending - order pending book entry
               * open - open order
               * closed - closed order
@@ -26,7 +26,7 @@ class OpenOrder:
         opentm (Union[Unset, float]): Unix timestamp of when order was placed
         starttm (Union[Unset, float]): Unix timestamp of order start time (or 0 if not set)
         expiretm (Union[Unset, float]): Unix timestamp of order end time (or 0 if not set)
-        descr (Union[Unset, OrderDescription]): Order description info
+        descr (Union[Unset, OpenOrderDescr]): Order description info
         vol (Union[Unset, str]): Volume of order (base currency)
         vol_exec (Union[Unset, str]): Volume executed (base currency)
         cost (Union[Unset, str]): Total cost (quote currency unless)
@@ -34,11 +34,11 @@ class OpenOrder:
         price (Union[Unset, str]): Average price (quote currency)
         stopprice (Union[Unset, str]): Stop price (quote currency)
         limitprice (Union[Unset, str]): Triggered limit price (quote currency, when limit based order type triggered)
-        trigger (Union[Unset, OrderTrigger]): Price signal used to trigger "stop-loss"
+        trigger (Union[Unset, OpenOrderTrigger]): Price signal used to trigger "stop-loss"
             "take-profit" "stop-loss-limit"
             "take-profit-limit" orders.
               * `last` is the implied trigger if this field is not set.
-             Default: OrderTrigger.LAST.
+             Default: OpenOrderTrigger.LAST.
         misc (Union[Unset, str]): Comma delimited list of miscellaneous info
 
               * `stopped` triggered by stop price
@@ -58,11 +58,11 @@ class OpenOrder:
 
     refid: Union[Unset, str] = UNSET
     userref: Union[Unset, str] = UNSET
-    status: Union[Unset, OrderStatus] = UNSET
+    status: Union[Unset, OpenOrderStatus] = UNSET
     opentm: Union[Unset, float] = UNSET
     starttm: Union[Unset, float] = UNSET
     expiretm: Union[Unset, float] = UNSET
-    descr: Union[Unset, OrderDescription] = UNSET
+    descr: Union[Unset, OpenOrderDescr] = UNSET
     vol: Union[Unset, str] = UNSET
     vol_exec: Union[Unset, str] = UNSET
     cost: Union[Unset, str] = UNSET
@@ -70,7 +70,7 @@ class OpenOrder:
     price: Union[Unset, str] = UNSET
     stopprice: Union[Unset, str] = UNSET
     limitprice: Union[Unset, str] = UNSET
-    trigger: Union[Unset, OrderTrigger] = OrderTrigger.LAST
+    trigger: Union[Unset, OpenOrderTrigger] = OpenOrderTrigger.LAST
     misc: Union[Unset, str] = UNSET
     oflags: Union[Unset, str] = UNSET
     trades: Union[Unset, List[str]] = UNSET
@@ -157,11 +157,11 @@ class OpenOrder:
         userref = d.pop("userref", UNSET)
 
         _status = d.pop("status", UNSET)
-        status: Union[Unset, OrderStatus]
+        status: Union[Unset, OpenOrderStatus]
         if isinstance(_status, Unset):
             status = UNSET
         else:
-            status = OrderStatus(_status)
+            status = OpenOrderStatus(_status)
 
         opentm = d.pop("opentm", UNSET)
 
@@ -170,11 +170,11 @@ class OpenOrder:
         expiretm = d.pop("expiretm", UNSET)
 
         _descr = d.pop("descr", UNSET)
-        descr: Union[Unset, OrderDescription]
+        descr: Union[Unset, OpenOrderDescr]
         if isinstance(_descr, Unset):
             descr = UNSET
         else:
-            descr = OrderDescription.from_dict(_descr)
+            descr = OpenOrderDescr.from_dict(_descr)
 
         vol = d.pop("vol", UNSET)
 
@@ -191,11 +191,11 @@ class OpenOrder:
         limitprice = d.pop("limitprice", UNSET)
 
         _trigger = d.pop("trigger", UNSET)
-        trigger: Union[Unset, OrderTrigger]
+        trigger: Union[Unset, OpenOrderTrigger]
         if isinstance(_trigger, Unset):
             trigger = UNSET
         else:
-            trigger = OrderTrigger(_trigger)
+            trigger = OpenOrderTrigger(_trigger)
 
         misc = d.pop("misc", UNSET)
 

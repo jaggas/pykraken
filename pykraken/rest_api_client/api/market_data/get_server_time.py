@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.inline_response_200 import InlineResponse200
+from ...models.get_server_time_response_200 import GetServerTimeResponse200
 from ...types import Response
 
 
@@ -25,15 +25,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[GetServerTimeResponse200]:
     if response.status_code == 200:
-        response_200 = InlineResponse200.from_dict(response.json())
+        response_200 = GetServerTimeResponse200.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[InlineResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[GetServerTimeResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,13 +45,13 @@ def _build_response(*, response: httpx.Response) -> Response[InlineResponse200]:
 def sync_detailed(
     *,
     client: Client,
-) -> Response[InlineResponse200]:
+) -> Response[GetServerTimeResponse200]:
     """Get Server Time
 
      Get the server's time.
 
     Returns:
-        Response[InlineResponse200]
+        Response[GetServerTimeResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -69,13 +69,13 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[InlineResponse200]:
+) -> Optional[GetServerTimeResponse200]:
     """Get Server Time
 
      Get the server's time.
 
     Returns:
-        Response[InlineResponse200]
+        Response[GetServerTimeResponse200]
     """
 
     return sync_detailed(
@@ -86,13 +86,13 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[InlineResponse200]:
+) -> Response[GetServerTimeResponse200]:
     """Get Server Time
 
      Get the server's time.
 
     Returns:
-        Response[InlineResponse200]
+        Response[GetServerTimeResponse200]
     """
 
     kwargs = _get_kwargs(
@@ -108,13 +108,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[InlineResponse200]:
+) -> Optional[GetServerTimeResponse200]:
     """Get Server Time
 
      Get the server's time.
 
     Returns:
-        Response[InlineResponse200]
+        Response[GetServerTimeResponse200]
     """
 
     return (

@@ -1,16 +1,15 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ...client import Client
-from ...models.cancel_open_order_request_body import CancelOpenOrderRequestBody
+from ...models.cancel_order_response_200 import CancelOrderResponse200
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
-    form_data: CancelOpenOrderRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/CancelOrder".format(client.base_url)
 
@@ -23,35 +22,40 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
-        "data": form_data.to_dict(),
     }
 
 
-def _build_response(*, response: httpx.Response) -> Response[Any]:
+def _parse_response(*, response: httpx.Response) -> Optional[CancelOrderResponse200]:
+    if response.status_code == 200:
+        response_200 = CancelOrderResponse200.from_dict(response.json())
+
+        return response_200
+    return None
+
+
+def _build_response(*, response: httpx.Response) -> Response[CancelOrderResponse200]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=None,
+        parsed=_parse_response(response=response),
     )
 
 
 def sync_detailed(
     *,
     client: Client,
-    form_data: CancelOpenOrderRequestBody,
-) -> Response[Any]:
+) -> Response[CancelOrderResponse200]:
     """Cancel Order
 
      Cancel a particular open order (or set of open orders) by `txid` or `userref`
 
     Returns:
-        Response[Any]
+        Response[CancelOrderResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     response = httpx.request(
@@ -62,25 +66,59 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-async def asyncio_detailed(
+def sync(
     *,
     client: Client,
-    form_data: CancelOpenOrderRequestBody,
-) -> Response[Any]:
+) -> Optional[CancelOrderResponse200]:
     """Cancel Order
 
      Cancel a particular open order (or set of open orders) by `txid` or `userref`
 
     Returns:
-        Response[Any]
+        Response[CancelOrderResponse200]
+    """
+
+    return sync_detailed(
+        client=client,
+    ).parsed
+
+
+async def asyncio_detailed(
+    *,
+    client: Client,
+) -> Response[CancelOrderResponse200]:
+    """Cancel Order
+
+     Cancel a particular open order (or set of open orders) by `txid` or `userref`
+
+    Returns:
+        Response[CancelOrderResponse200]
     """
 
     kwargs = _get_kwargs(
         client=client,
-        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
+
+
+async def asyncio(
+    *,
+    client: Client,
+) -> Optional[CancelOrderResponse200]:
+    """Cancel Order
+
+     Cancel a particular open order (or set of open orders) by `txid` or `userref`
+
+    Returns:
+        Response[CancelOrderResponse200]
+    """
+
+    return (
+        await asyncio_detailed(
+            client=client,
+        )
+    ).parsed
