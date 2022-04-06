@@ -1,15 +1,15 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Union
 
 import httpx
 
 from ...client import Client
-from ...models.get_order_book_response_200 import GetOrderBookResponse200
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
     client: Client,
+    pair: Union[Unset, None, str] = UNSET,
     count: Union[Unset, None, int] = 100,
 ) -> Dict[str, Any]:
     url = "{}/public/Depth".format(client.base_url)
@@ -18,6 +18,8 @@ def _get_kwargs(
     cookies: Dict[str, Any] = client.get_cookies()
 
     params: Dict[str, Any] = {}
+    params["pair"] = pair
+
     params["count"] = count
 
     params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
@@ -32,39 +34,34 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetOrderBookResponse200]:
-    if response.status_code == 200:
-        response_200 = GetOrderBookResponse200.from_dict(response.json())
-
-        return response_200
-    return None
-
-
-def _build_response(*, response: httpx.Response) -> Response[GetOrderBookResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=None,
     )
 
 
 def sync_detailed(
     *,
     client: Client,
+    pair: Union[Unset, None, str] = UNSET,
     count: Union[Unset, None, int] = 100,
-) -> Response[GetOrderBookResponse200]:
+) -> Response[Any]:
     """Get Order Book
 
     Args:
+        pair (Union[Unset, None, str]):
         count (Union[Unset, None, int]):  Default: 100.
 
     Returns:
-        Response[GetOrderBookResponse200]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        pair=pair,
         count=count,
     )
 
@@ -76,42 +73,25 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-def sync(
-    *,
-    client: Client,
-    count: Union[Unset, None, int] = 100,
-) -> Optional[GetOrderBookResponse200]:
-    """Get Order Book
-
-    Args:
-        count (Union[Unset, None, int]):  Default: 100.
-
-    Returns:
-        Response[GetOrderBookResponse200]
-    """
-
-    return sync_detailed(
-        client=client,
-        count=count,
-    ).parsed
-
-
 async def asyncio_detailed(
     *,
     client: Client,
+    pair: Union[Unset, None, str] = UNSET,
     count: Union[Unset, None, int] = 100,
-) -> Response[GetOrderBookResponse200]:
+) -> Response[Any]:
     """Get Order Book
 
     Args:
+        pair (Union[Unset, None, str]):
         count (Union[Unset, None, int]):  Default: 100.
 
     Returns:
-        Response[GetOrderBookResponse200]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        pair=pair,
         count=count,
     )
 
@@ -119,25 +99,3 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: Client,
-    count: Union[Unset, None, int] = 100,
-) -> Optional[GetOrderBookResponse200]:
-    """Get Order Book
-
-    Args:
-        count (Union[Unset, None, int]):  Default: 100.
-
-    Returns:
-        Response[GetOrderBookResponse200]
-    """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            count=count,
-        )
-    ).parsed

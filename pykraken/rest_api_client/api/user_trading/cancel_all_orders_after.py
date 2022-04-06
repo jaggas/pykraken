@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.cancel_all_orders_after_response_200 import CancelAllOrdersAfterResponse200
+from ...models.inline_response_20028 import InlineResponse20028
+from ...models.private_cancel_all_orders_after_body import PrivateCancelAllOrdersAfterBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: PrivateCancelAllOrdersAfterBody,
 ) -> Dict[str, Any]:
     url = "{}/private/CancelAllOrdersAfter".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[CancelAllOrdersAfterResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20028]:
     if response.status_code == 200:
-        response_200 = CancelAllOrdersAfterResponse200.from_dict(response.json())
+        response_200 = InlineResponse20028.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[CancelAllOrdersAfterResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse20028]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,7 +48,8 @@ def _build_response(*, response: httpx.Response) -> Response[CancelAllOrdersAfte
 def sync_detailed(
     *,
     client: Client,
-) -> Response[CancelAllOrdersAfterResponse200]:
+    form_data: PrivateCancelAllOrdersAfterBody,
+) -> Response[InlineResponse20028]:
     """Cancel All Orders After X
 
      CancelAllOrdersAfter provides a \"Dead Man's Switch\" mechanism to protect the client from network
@@ -62,11 +66,12 @@ def sync_detailed(
     will be cancelled when the trading engine comes back from downtime - planned or otherwise).
 
     Returns:
-        Response[CancelAllOrdersAfterResponse200]
+        Response[InlineResponse20028]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -80,7 +85,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[CancelAllOrdersAfterResponse200]:
+    form_data: PrivateCancelAllOrdersAfterBody,
+) -> Optional[InlineResponse20028]:
     """Cancel All Orders After X
 
      CancelAllOrdersAfter provides a \"Dead Man's Switch\" mechanism to protect the client from network
@@ -97,18 +103,20 @@ def sync(
     will be cancelled when the trading engine comes back from downtime - planned or otherwise).
 
     Returns:
-        Response[CancelAllOrdersAfterResponse200]
+        Response[InlineResponse20028]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[CancelAllOrdersAfterResponse200]:
+    form_data: PrivateCancelAllOrdersAfterBody,
+) -> Response[InlineResponse20028]:
     """Cancel All Orders After X
 
      CancelAllOrdersAfter provides a \"Dead Man's Switch\" mechanism to protect the client from network
@@ -125,11 +133,12 @@ async def asyncio_detailed(
     will be cancelled when the trading engine comes back from downtime - planned or otherwise).
 
     Returns:
-        Response[CancelAllOrdersAfterResponse200]
+        Response[InlineResponse20028]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -141,7 +150,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[CancelAllOrdersAfterResponse200]:
+    form_data: PrivateCancelAllOrdersAfterBody,
+) -> Optional[InlineResponse20028]:
     """Cancel All Orders After X
 
      CancelAllOrdersAfter provides a \"Dead Man's Switch\" mechanism to protect the client from network
@@ -158,11 +168,12 @@ async def asyncio(
     will be cancelled when the trading engine comes back from downtime - planned or otherwise).
 
     Returns:
-        Response[CancelAllOrdersAfterResponse200]
+        Response[InlineResponse20028]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

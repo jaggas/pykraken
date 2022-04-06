@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_orders_info_response_200 import GetOrdersInfoResponse200
+from ...models.inline_response_20014 import InlineResponse20014
+from ...models.query_orders_info_request_body import QueryOrdersInfoRequestBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: QueryOrdersInfoRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/QueryOrders".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetOrdersInfoResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20014]:
     if response.status_code == 200:
-        response_200 = GetOrdersInfoResponse200.from_dict(response.json())
+        response_200 = InlineResponse20014.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetOrdersInfoResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse20014]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,17 +48,19 @@ def _build_response(*, response: httpx.Response) -> Response[GetOrdersInfoRespon
 def sync_detailed(
     *,
     client: Client,
-) -> Response[GetOrdersInfoResponse200]:
+    form_data: QueryOrdersInfoRequestBody,
+) -> Response[InlineResponse20014]:
     """Query Orders Info
 
      Retrieve information about specific orders.
 
     Returns:
-        Response[GetOrdersInfoResponse200]
+        Response[InlineResponse20014]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -69,34 +74,38 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[GetOrdersInfoResponse200]:
+    form_data: QueryOrdersInfoRequestBody,
+) -> Optional[InlineResponse20014]:
     """Query Orders Info
 
      Retrieve information about specific orders.
 
     Returns:
-        Response[GetOrdersInfoResponse200]
+        Response[InlineResponse20014]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[GetOrdersInfoResponse200]:
+    form_data: QueryOrdersInfoRequestBody,
+) -> Response[InlineResponse20014]:
     """Query Orders Info
 
      Retrieve information about specific orders.
 
     Returns:
-        Response[GetOrdersInfoResponse200]
+        Response[InlineResponse20014]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -108,17 +117,19 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[GetOrdersInfoResponse200]:
+    form_data: QueryOrdersInfoRequestBody,
+) -> Optional[InlineResponse20014]:
     """Query Orders Info
 
      Retrieve information about specific orders.
 
     Returns:
-        Response[GetOrdersInfoResponse200]
+        Response[InlineResponse20014]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

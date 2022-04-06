@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_websockets_token_response_200 import GetWebsocketsTokenResponse200
+from ...models.inline_response_2009 import InlineResponse2009
+from ...models.private_get_web_sockets_token_body import PrivateGetWebSocketsTokenBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: PrivateGetWebSocketsTokenBody,
 ) -> Dict[str, Any]:
     url = "{}/private/GetWebSocketsToken".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetWebsocketsTokenResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse2009]:
     if response.status_code == 200:
-        response_200 = GetWebsocketsTokenResponse200.from_dict(response.json())
+        response_200 = InlineResponse2009.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetWebsocketsTokenResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse2009]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,7 +48,8 @@ def _build_response(*, response: httpx.Response) -> Response[GetWebsocketsTokenR
 def sync_detailed(
     *,
     client: Client,
-) -> Response[GetWebsocketsTokenResponse200]:
+    form_data: PrivateGetWebSocketsTokenBody,
+) -> Response[InlineResponse2009]:
     """Get Websockets Token
 
      An authentication token must be requested via this REST API endpoint in order to connect to and
@@ -57,11 +61,12 @@ def sync_detailed(
     authentication token.
 
     Returns:
-        Response[GetWebsocketsTokenResponse200]
+        Response[InlineResponse2009]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -75,7 +80,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[GetWebsocketsTokenResponse200]:
+    form_data: PrivateGetWebSocketsTokenBody,
+) -> Optional[InlineResponse2009]:
     """Get Websockets Token
 
      An authentication token must be requested via this REST API endpoint in order to connect to and
@@ -87,18 +93,20 @@ def sync(
     authentication token.
 
     Returns:
-        Response[GetWebsocketsTokenResponse200]
+        Response[InlineResponse2009]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[GetWebsocketsTokenResponse200]:
+    form_data: PrivateGetWebSocketsTokenBody,
+) -> Response[InlineResponse2009]:
     """Get Websockets Token
 
      An authentication token must be requested via this REST API endpoint in order to connect to and
@@ -110,11 +118,12 @@ async def asyncio_detailed(
     authentication token.
 
     Returns:
-        Response[GetWebsocketsTokenResponse200]
+        Response[InlineResponse2009]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -126,7 +135,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[GetWebsocketsTokenResponse200]:
+    form_data: PrivateGetWebSocketsTokenBody,
+) -> Optional[InlineResponse2009]:
     """Get Websockets Token
 
      An authentication token must be requested via this REST API endpoint in order to connect to and
@@ -138,11 +148,12 @@ async def asyncio(
     authentication token.
 
     Returns:
-        Response[GetWebsocketsTokenResponse200]
+        Response[InlineResponse2009]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

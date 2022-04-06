@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.withdraw_funds_response_200 import WithdrawFundsResponse200
+from ...models.inline_response_20033 import InlineResponse20033
+from ...models.private_withdraw_body import PrivateWithdrawBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: PrivateWithdrawBody,
 ) -> Dict[str, Any]:
     url = "{}/private/Withdraw".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[WithdrawFundsResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20033]:
     if response.status_code == 200:
-        response_200 = WithdrawFundsResponse200.from_dict(response.json())
+        response_200 = InlineResponse20033.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[WithdrawFundsResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse20033]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,17 +48,19 @@ def _build_response(*, response: httpx.Response) -> Response[WithdrawFundsRespon
 def sync_detailed(
     *,
     client: Client,
-) -> Response[WithdrawFundsResponse200]:
+    form_data: PrivateWithdrawBody,
+) -> Response[InlineResponse20033]:
     """Withdraw Funds
 
      Make a withdrawal request.
 
     Returns:
-        Response[WithdrawFundsResponse200]
+        Response[InlineResponse20033]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -69,34 +74,38 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[WithdrawFundsResponse200]:
+    form_data: PrivateWithdrawBody,
+) -> Optional[InlineResponse20033]:
     """Withdraw Funds
 
      Make a withdrawal request.
 
     Returns:
-        Response[WithdrawFundsResponse200]
+        Response[InlineResponse20033]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[WithdrawFundsResponse200]:
+    form_data: PrivateWithdrawBody,
+) -> Response[InlineResponse20033]:
     """Withdraw Funds
 
      Make a withdrawal request.
 
     Returns:
-        Response[WithdrawFundsResponse200]
+        Response[InlineResponse20033]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -108,17 +117,19 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[WithdrawFundsResponse200]:
+    form_data: PrivateWithdrawBody,
+) -> Optional[InlineResponse20033]:
     """Withdraw Funds
 
      Make a withdrawal request.
 
     Returns:
-        Response[WithdrawFundsResponse200]
+        Response[InlineResponse20033]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

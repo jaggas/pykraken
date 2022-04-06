@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_system_status_response_200 import GetSystemStatusResponse200
+from ...models.inline_response_2001 import InlineResponse2001
 from ...types import Response
 
 
@@ -25,15 +25,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetSystemStatusResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse2001]:
     if response.status_code == 200:
-        response_200 = GetSystemStatusResponse200.from_dict(response.json())
+        response_200 = InlineResponse2001.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetSystemStatusResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse2001]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,13 +45,13 @@ def _build_response(*, response: httpx.Response) -> Response[GetSystemStatusResp
 def sync_detailed(
     *,
     client: Client,
-) -> Response[GetSystemStatusResponse200]:
+) -> Response[InlineResponse2001]:
     """Get System Status
 
      Get the current system status or trading mode.
 
     Returns:
-        Response[GetSystemStatusResponse200]
+        Response[InlineResponse2001]
     """
 
     kwargs = _get_kwargs(
@@ -69,13 +69,13 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[GetSystemStatusResponse200]:
+) -> Optional[InlineResponse2001]:
     """Get System Status
 
      Get the current system status or trading mode.
 
     Returns:
-        Response[GetSystemStatusResponse200]
+        Response[InlineResponse2001]
     """
 
     return sync_detailed(
@@ -86,13 +86,13 @@ def sync(
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[GetSystemStatusResponse200]:
+) -> Response[InlineResponse2001]:
     """Get System Status
 
      Get the current system status or trading mode.
 
     Returns:
-        Response[GetSystemStatusResponse200]
+        Response[InlineResponse2001]
     """
 
     kwargs = _get_kwargs(
@@ -108,13 +108,13 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[GetSystemStatusResponse200]:
+) -> Optional[InlineResponse2001]:
     """Get System Status
 
      Get the current system status or trading mode.
 
     Returns:
-        Response[GetSystemStatusResponse200]
+        Response[InlineResponse2001]
     """
 
     return (

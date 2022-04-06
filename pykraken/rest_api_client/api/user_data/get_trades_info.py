@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_trades_info_response_200 import GetTradesInfoResponse200
+from ...models.get_trades_info_request_body import GetTradesInfoRequestBody
+from ...models.inline_response_20016 import InlineResponse20016
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: GetTradesInfoRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/QueryTrades".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetTradesInfoResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20016]:
     if response.status_code == 200:
-        response_200 = GetTradesInfoResponse200.from_dict(response.json())
+        response_200 = InlineResponse20016.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetTradesInfoResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse20016]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,17 +48,19 @@ def _build_response(*, response: httpx.Response) -> Response[GetTradesInfoRespon
 def sync_detailed(
     *,
     client: Client,
-) -> Response[GetTradesInfoResponse200]:
+    form_data: GetTradesInfoRequestBody,
+) -> Response[InlineResponse20016]:
     """Query Trades Info
 
      Retrieve information about specific trades/fills.
 
     Returns:
-        Response[GetTradesInfoResponse200]
+        Response[InlineResponse20016]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -69,34 +74,38 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[GetTradesInfoResponse200]:
+    form_data: GetTradesInfoRequestBody,
+) -> Optional[InlineResponse20016]:
     """Query Trades Info
 
      Retrieve information about specific trades/fills.
 
     Returns:
-        Response[GetTradesInfoResponse200]
+        Response[InlineResponse20016]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[GetTradesInfoResponse200]:
+    form_data: GetTradesInfoRequestBody,
+) -> Response[InlineResponse20016]:
     """Query Trades Info
 
      Retrieve information about specific trades/fills.
 
     Returns:
-        Response[GetTradesInfoResponse200]
+        Response[InlineResponse20016]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -108,17 +117,19 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[GetTradesInfoResponse200]:
+    form_data: GetTradesInfoRequestBody,
+) -> Optional[InlineResponse20016]:
     """Query Trades Info
 
      Retrieve information about specific trades/fills.
 
     Returns:
-        Response[GetTradesInfoResponse200]
+        Response[InlineResponse20016]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

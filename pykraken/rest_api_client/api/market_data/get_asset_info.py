@@ -1,9 +1,8 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Union
 
 import httpx
 
 from ...client import Client
-from ...models.get_asset_info_response_200 import GetAssetInfoResponse200
 from ...types import UNSET, Response, Unset
 
 
@@ -35,20 +34,12 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetAssetInfoResponse200]:
-    if response.status_code == 200:
-        response_200 = GetAssetInfoResponse200.from_dict(response.json())
-
-        return response_200
-    return None
-
-
-def _build_response(*, response: httpx.Response) -> Response[GetAssetInfoResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[Any]:
     return Response(
         status_code=response.status_code,
         content=response.content,
         headers=response.headers,
-        parsed=_parse_response(response=response),
+        parsed=None,
     )
 
 
@@ -57,7 +48,7 @@ def sync_detailed(
     client: Client,
     asset: Union[Unset, None, str] = UNSET,
     aclass: Union[Unset, None, str] = UNSET,
-) -> Response[GetAssetInfoResponse200]:
+) -> Response[Any]:
     """Get Asset Info
 
      Get information about the assets that are available for deposit, withdrawal, trading and staking.
@@ -67,7 +58,7 @@ def sync_detailed(
         aclass (Union[Unset, None, str]):
 
     Returns:
-        Response[GetAssetInfoResponse200]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -84,37 +75,12 @@ def sync_detailed(
     return _build_response(response=response)
 
 
-def sync(
-    *,
-    client: Client,
-    asset: Union[Unset, None, str] = UNSET,
-    aclass: Union[Unset, None, str] = UNSET,
-) -> Optional[GetAssetInfoResponse200]:
-    """Get Asset Info
-
-     Get information about the assets that are available for deposit, withdrawal, trading and staking.
-
-    Args:
-        asset (Union[Unset, None, str]):
-        aclass (Union[Unset, None, str]):
-
-    Returns:
-        Response[GetAssetInfoResponse200]
-    """
-
-    return sync_detailed(
-        client=client,
-        asset=asset,
-        aclass=aclass,
-    ).parsed
-
-
 async def asyncio_detailed(
     *,
     client: Client,
     asset: Union[Unset, None, str] = UNSET,
     aclass: Union[Unset, None, str] = UNSET,
-) -> Response[GetAssetInfoResponse200]:
+) -> Response[Any]:
     """Get Asset Info
 
      Get information about the assets that are available for deposit, withdrawal, trading and staking.
@@ -124,7 +90,7 @@ async def asyncio_detailed(
         aclass (Union[Unset, None, str]):
 
     Returns:
-        Response[GetAssetInfoResponse200]
+        Response[Any]
     """
 
     kwargs = _get_kwargs(
@@ -137,30 +103,3 @@ async def asyncio_detailed(
         response = await _client.request(**kwargs)
 
     return _build_response(response=response)
-
-
-async def asyncio(
-    *,
-    client: Client,
-    asset: Union[Unset, None, str] = UNSET,
-    aclass: Union[Unset, None, str] = UNSET,
-) -> Optional[GetAssetInfoResponse200]:
-    """Get Asset Info
-
-     Get information about the assets that are available for deposit, withdrawal, trading and staking.
-
-    Args:
-        asset (Union[Unset, None, str]):
-        aclass (Union[Unset, None, str]):
-
-    Returns:
-        Response[GetAssetInfoResponse200]
-    """
-
-    return (
-        await asyncio_detailed(
-            client=client,
-            asset=asset,
-            aclass=aclass,
-        )
-    ).parsed

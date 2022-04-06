@@ -3,12 +3,14 @@ from typing import Any, Dict
 import httpx
 
 from ...client import Client
+from ...models.staking_transactions_body import StakingTransactionsBody
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: StakingTransactionsBody,
 ) -> Dict[str, Any]:
     url = "{}/private/Staking/Transactions".format(client.base_url)
 
@@ -21,6 +23,7 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
@@ -36,6 +39,7 @@ def _build_response(*, response: httpx.Response) -> Response[Any]:
 def sync_detailed(
     *,
     client: Client,
+    form_data: StakingTransactionsBody,
 ) -> Response[Any]:
     """List of Staking Transactions
 
@@ -49,6 +53,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -62,6 +67,7 @@ def sync_detailed(
 async def asyncio_detailed(
     *,
     client: Client,
+    form_data: StakingTransactionsBody,
 ) -> Response[Any]:
     """List of Staking Transactions
 
@@ -75,6 +81,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:

@@ -2,6 +2,8 @@
 
 import requests
 
+from rest_api_client.models import TradeBalance
+
 # private query nonce
 import time
 import os
@@ -191,7 +193,3 @@ class API:
         sigdigest = base64.b64encode(signature.digest())
 
         return sigdigest.decode()
-
-api = API()
-print(api.query_private('Balance'))
-print()

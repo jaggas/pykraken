@@ -3,13 +3,15 @@ from typing import Any, Dict, Optional
 import httpx
 
 from ...client import Client
-from ...models.get_closed_orders_response_200 import GetClosedOrdersResponse200
+from ...models.get_closed_orders_request_body import GetClosedOrdersRequestBody
+from ...models.inline_response_20013 import InlineResponse20013
 from ...types import Response
 
 
 def _get_kwargs(
     *,
     client: Client,
+    form_data: GetClosedOrdersRequestBody,
 ) -> Dict[str, Any]:
     url = "{}/private/ClosedOrders".format(client.base_url)
 
@@ -22,18 +24,19 @@ def _get_kwargs(
         "headers": headers,
         "cookies": cookies,
         "timeout": client.get_timeout(),
+        "data": form_data.to_dict(),
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetClosedOrdersResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse20013]:
     if response.status_code == 200:
-        response_200 = GetClosedOrdersResponse200.from_dict(response.json())
+        response_200 = InlineResponse20013.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetClosedOrdersResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse20013]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -45,7 +48,8 @@ def _build_response(*, response: httpx.Response) -> Response[GetClosedOrdersResp
 def sync_detailed(
     *,
     client: Client,
-) -> Response[GetClosedOrdersResponse200]:
+    form_data: GetClosedOrdersRequestBody,
+) -> Response[InlineResponse20013]:
     """Get Closed Orders
 
      Retrieve information about orders that have been closed (filled or cancelled). 50 results are
@@ -55,11 +59,12 @@ def sync_detailed(
     (`opentm`) is used
 
     Returns:
-        Response[GetClosedOrdersResponse200]
+        Response[InlineResponse20013]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     response = httpx.request(
@@ -73,7 +78,8 @@ def sync_detailed(
 def sync(
     *,
     client: Client,
-) -> Optional[GetClosedOrdersResponse200]:
+    form_data: GetClosedOrdersRequestBody,
+) -> Optional[InlineResponse20013]:
     """Get Closed Orders
 
      Retrieve information about orders that have been closed (filled or cancelled). 50 results are
@@ -83,18 +89,20 @@ def sync(
     (`opentm`) is used
 
     Returns:
-        Response[GetClosedOrdersResponse200]
+        Response[InlineResponse20013]
     """
 
     return sync_detailed(
         client=client,
+        form_data=form_data,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: Client,
-) -> Response[GetClosedOrdersResponse200]:
+    form_data: GetClosedOrdersRequestBody,
+) -> Response[InlineResponse20013]:
     """Get Closed Orders
 
      Retrieve information about orders that have been closed (filled or cancelled). 50 results are
@@ -104,11 +112,12 @@ async def asyncio_detailed(
     (`opentm`) is used
 
     Returns:
-        Response[GetClosedOrdersResponse200]
+        Response[InlineResponse20013]
     """
 
     kwargs = _get_kwargs(
         client=client,
+        form_data=form_data,
     )
 
     async with httpx.AsyncClient(verify=client.verify_ssl) as _client:
@@ -120,7 +129,8 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: Client,
-) -> Optional[GetClosedOrdersResponse200]:
+    form_data: GetClosedOrdersRequestBody,
+) -> Optional[InlineResponse20013]:
     """Get Closed Orders
 
      Retrieve information about orders that have been closed (filled or cancelled). 50 results are
@@ -130,11 +140,12 @@ async def asyncio(
     (`opentm`) is used
 
     Returns:
-        Response[GetClosedOrdersResponse200]
+        Response[InlineResponse20013]
     """
 
     return (
         await asyncio_detailed(
             client=client,
+            form_data=form_data,
         )
     ).parsed

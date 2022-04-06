@@ -4,7 +4,7 @@ import httpx
 
 from ...client import Client
 from ...models.get_tradable_asset_pairs_info import GetTradableAssetPairsInfo
-from ...models.get_tradable_asset_pairs_response_200 import GetTradableAssetPairsResponse200
+from ...models.inline_response_2003 import InlineResponse2003
 from ...types import UNSET, Response, Unset
 
 
@@ -40,15 +40,15 @@ def _get_kwargs(
     }
 
 
-def _parse_response(*, response: httpx.Response) -> Optional[GetTradableAssetPairsResponse200]:
+def _parse_response(*, response: httpx.Response) -> Optional[InlineResponse2003]:
     if response.status_code == 200:
-        response_200 = GetTradableAssetPairsResponse200.from_dict(response.json())
+        response_200 = InlineResponse2003.from_dict(response.json())
 
         return response_200
     return None
 
 
-def _build_response(*, response: httpx.Response) -> Response[GetTradableAssetPairsResponse200]:
+def _build_response(*, response: httpx.Response) -> Response[InlineResponse2003]:
     return Response(
         status_code=response.status_code,
         content=response.content,
@@ -62,7 +62,7 @@ def sync_detailed(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     info: Union[Unset, None, GetTradableAssetPairsInfo] = GetTradableAssetPairsInfo.INFO,
-) -> Response[GetTradableAssetPairsResponse200]:
+) -> Response[InlineResponse2003]:
     """Get Tradable Asset Pairs
 
      Get tradable asset pairs
@@ -73,7 +73,7 @@ def sync_detailed(
             GetTradableAssetPairsInfo.INFO.
 
     Returns:
-        Response[GetTradableAssetPairsResponse200]
+        Response[InlineResponse2003]
     """
 
     kwargs = _get_kwargs(
@@ -95,7 +95,7 @@ def sync(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     info: Union[Unset, None, GetTradableAssetPairsInfo] = GetTradableAssetPairsInfo.INFO,
-) -> Optional[GetTradableAssetPairsResponse200]:
+) -> Optional[InlineResponse2003]:
     """Get Tradable Asset Pairs
 
      Get tradable asset pairs
@@ -106,7 +106,7 @@ def sync(
             GetTradableAssetPairsInfo.INFO.
 
     Returns:
-        Response[GetTradableAssetPairsResponse200]
+        Response[InlineResponse2003]
     """
 
     return sync_detailed(
@@ -121,7 +121,7 @@ async def asyncio_detailed(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     info: Union[Unset, None, GetTradableAssetPairsInfo] = GetTradableAssetPairsInfo.INFO,
-) -> Response[GetTradableAssetPairsResponse200]:
+) -> Response[InlineResponse2003]:
     """Get Tradable Asset Pairs
 
      Get tradable asset pairs
@@ -132,7 +132,7 @@ async def asyncio_detailed(
             GetTradableAssetPairsInfo.INFO.
 
     Returns:
-        Response[GetTradableAssetPairsResponse200]
+        Response[InlineResponse2003]
     """
 
     kwargs = _get_kwargs(
@@ -152,7 +152,7 @@ async def asyncio(
     client: Client,
     pair: Union[Unset, None, str] = UNSET,
     info: Union[Unset, None, GetTradableAssetPairsInfo] = GetTradableAssetPairsInfo.INFO,
-) -> Optional[GetTradableAssetPairsResponse200]:
+) -> Optional[InlineResponse2003]:
     """Get Tradable Asset Pairs
 
      Get tradable asset pairs
@@ -163,7 +163,7 @@ async def asyncio(
             GetTradableAssetPairsInfo.INFO.
 
     Returns:
-        Response[GetTradableAssetPairsResponse200]
+        Response[InlineResponse2003]
     """
 
     return (
